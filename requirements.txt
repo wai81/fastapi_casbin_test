@@ -1,0 +1,29 @@
+#fastapi
+uvicorn
+fastapi
+fastapi-utils
+
+# for database
+asyncpg
+sqlalchemy[asyncio]
+alembic
+pydantic
+
+# for env var
+python-dotenv
+
+#for auth
+python-jose
+passlib
+cryptography
+bcrypt
+
+#for type
+email-validator
+typing_extensions
+
+python-multipart
+python-simplexml
+
+#casbin
+fastapi-authz
