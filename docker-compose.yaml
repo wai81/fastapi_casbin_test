@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+#  запуск api
+  app_api:
+    build: .
+#    command: uvicorn app.main:app --host 0.0.0.0
+    command: bash -c 'while !</dev/tcp/app_db/5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=qwerty
+      - DB_DATABASE=grka_test_db
+      - DB_HOST=app_db
+      - DB_PORT=5432
+    depends_on:
+      - app_db
+    restart: always
+
+  app_db:
+    image: bitnami/postgresql
+    volumes:
+      - postgres_data:/bitnami/postgresql
+    expose:
+      - 5432 #"${DB_PORT}:5432"
+    environment:
+      - POSTGRESQL_USER=postgres #${DB_USERNAME}
+      - POSTGRESQL_PASSWORD=qwerty #${DB_PASSWORD}
+      - POSTGRESQL_DB=grka_test_db #${DB_DATABASE}
+    restart: always
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
+
+volumes:
+  postgres_data:

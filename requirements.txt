@@ -25,5 +25,8 @@ typing_extensions
 python-multipart
 python-simplexml
 
-#casbin
-fastapi-authz
+#paginator
+fastapi-pagination
+
+#filter
+fastapi_filter
