@@ -1,3 +1,6 @@
+import casbin_sqlalchemy_adapter
+import casbin
+
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,8 +12,11 @@ from app.api.api_v1.api import api_router
 # Model.metadata.create_all(bind=engine)
 from app.core.config import settings
 from app.db.base import Base
-from app.db.session_async import engine
+from app.db.session_async import SQLALCHEMY_DATABASE_URL, engine
 
+adapter = casbin_sqlalchemy_adapter.Adapter(SQLALCHEMY_DATABASE_URL)
+
+enforce = casbin.Enforcer('./casbin/rbac_model.conf', adapter, True)
 
 async def start_db():
     async with engine.begin() as conn:

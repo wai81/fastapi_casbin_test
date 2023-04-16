@@ -30,3 +30,5 @@ fastapi-pagination
 
 #filter
 fastapi_filter
+#casbin
+casbin_sqlalchemy_adapter

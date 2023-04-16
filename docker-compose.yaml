@@ -21,16 +21,18 @@ services:
     restart: always
 
   app_db:
-    image: bitnami/postgresql
-    volumes:
-      - postgres_data:/bitnami/postgresql
-    expose:
-      - 5432 #"${DB_PORT}:5432"
-    environment:
-      - POSTGRESQL_USER=postgres #${DB_USERNAME}
-      - POSTGRESQL_PASSWORD=qwerty #${DB_PASSWORD}
-      - POSTGRESQL_DB=grka_test_db #${DB_DATABASE}
-    restart: always
+      image: postgres:15.2
+      restart: always
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: qwerty
+        POSTGRES_DB: grka_test_db
+        TZ: "Europe/Minsk"
+        PTZ: "Europe/Minsk"
+      ports:
+        - 5432:5432
+      volumes:
+        - postgres_data:/var/lib/postgresql/data:cached
 
   adminer:
     image: adminer
